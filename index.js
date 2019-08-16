@@ -1,6 +1,7 @@
 const express = require('express');
-var exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const path = require('path');
+const mongoose = require('mongoose');
 
 // Require routes
 const home = require('./routes/home');
@@ -29,15 +30,28 @@ app.set('views', 'views');
 // Use Routes
 app.use('/', home);
 app.use(express.urlencoded({extended: true}));
-app.use('/course-add', courseAdd);
+// app.use('/course-add', courseAdd);
 app.use('/courses', courses);
 app.use('/cart', cartRoutes);
 
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+async function start() {
+    try {
+        await mongoose.connect('mongodb://localhost/e-courses', {useNewUrlParser: true, useFindAndModify: false});
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
+
+
+
+
 
 
