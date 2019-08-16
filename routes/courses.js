@@ -7,7 +7,13 @@ const router = Router();
 
 // Get All courses
 router.get('/', async (req, res) => {
-    const courses = await Course.find();
+    const courses = await Course.find()
+        .populate('userId', 'email name')
+        .select('price title img');
+    
+    
+    // console.log(courses);
+    
     res.render('courses', {
         title: 'Courses',
         isCourses: true,
@@ -52,7 +58,8 @@ router.post('/add', async (req, res) => {
     const course = new Course({
         title: req.body.title,
         price: req.body.price,
-        img: req.body.img
+        img: req.body.img,
+        userId: req.user
     });
     try {
         await course.save();
