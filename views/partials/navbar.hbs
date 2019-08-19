@@ -22,6 +22,13 @@
                 <li><a href="/courses/add">Add Course</a></li>
             {{/if}}
 
+
+            {{#if isOrder}}
+                <li class="active"><a href="/orders">Orders</a></li>
+            {{else}}
+                <li><a href="/orders">Orders</a></li>
+            {{/if}}
+
             {{#if isCart}}
                 <li class="active"><a href="/cart">Basket</a></li>
             {{else}}

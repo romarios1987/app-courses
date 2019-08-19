@@ -9,8 +9,8 @@ const User = require('./models/user');
 // Require routes
 const home = require('./routes/home');
 const courses = require('./routes/courses');
-const courseAdd = require('./routes/course-add');
 const cartRoutes = require('./routes/cart');
+const orders = require('./routes/orders');
 
 
 const app = express();
@@ -49,6 +49,7 @@ app.use('/', home);
 app.use(express.urlencoded({extended: true}));
 app.use('/courses', courses);
 app.use('/cart', cartRoutes);
+app.use('/orders', orders);
 
 
 const PORT = process.env.PORT || 5000;
