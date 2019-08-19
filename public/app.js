@@ -20,6 +20,21 @@ const toDate = (date) => {
 };
 
 
+
+// $(document).ready(function(){
+//     $('.sidenav').sidenav();
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elem = document.querySelector('.sidenav');
+    var instance = M.Sidenav.init(elem, {
+        inDuration: 350,
+        outDuration: 350,
+        edge: 'left' //or right
+    });
+});
+
+
 document.querySelectorAll('.date').forEach((node) => {
     node.textContent = toDate(node.textContent)
 });
