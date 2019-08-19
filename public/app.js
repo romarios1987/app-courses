@@ -20,12 +20,11 @@ const toDate = (date) => {
 };
 
 
-
 // $(document).ready(function(){
 //     $('.sidenav').sidenav();
 // });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var elem = document.querySelector('.sidenav');
     var instance = M.Sidenav.init(elem, {
         inDuration: 350,
@@ -40,7 +39,6 @@ document.querySelectorAll('.date').forEach((node) => {
 });
 
 
-
 document.querySelectorAll('.price').forEach((node) => {
     node.textContent = toCurrency(node.textContent)
 });
@@ -53,8 +51,14 @@ if ($cart) {
         if (event.target.classList.contains('js-remove')) {
             const id = event.target.dataset.id;
 
+            const csrf = event.target.dataset.csrf;
+
             fetch('/cart/remove/' + id, {
-                method: 'delete'
+                method: 'delete',
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
+
             }).then((res) => res.json())
                 .then((cart) => {
                     // console.log(cart);
@@ -80,3 +84,6 @@ if ($cart) {
         }
     })
 }
+
+
+M.Tabs.init(document.querySelectorAll('.tabs'));

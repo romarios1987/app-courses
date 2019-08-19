@@ -1,5 +1,5 @@
 const {Router} = require('express');
-
+const auth = require('../middleware/auth');
 const Course = require('../models/course');
 
 const router = Router();
@@ -10,10 +10,10 @@ router.get('/', async (req, res) => {
     const courses = await Course.find()
         .populate('userId', 'email name')
         .select('price title img');
-    
-    
+
+
     // console.log(courses);
-    
+
     res.render('courses', {
         title: 'Courses',
         isCourses: true,
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 
 
 // Get course for Edit by ID
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', auth, async (req, res) => {
 
     if (!req.query.allow) {
         res.redirect('/')
@@ -38,7 +38,7 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 // Post course for Edit by ID
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     const {id} = req.body;
     delete req.body.id;
 
@@ -47,14 +47,14 @@ router.post('/edit', async (req, res) => {
 });
 
 
-router.get('/add', (req, res) => {
+router.get('/add', auth, (req, res) => {
     res.render('course-add', {
         title: 'Add Course',
         isAdd: true
     })
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
     const course = new Course({
         title: req.body.title,
         price: req.body.price,
@@ -81,7 +81,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Delete course
-router.post('/remove', async (req, res) => {
+router.post('/remove', auth, async (req, res) => {
 
     try {
         await Course.deleteOne({_id: req.body.id});
