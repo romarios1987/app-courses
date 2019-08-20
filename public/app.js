@@ -20,10 +20,6 @@ const toDate = (date) => {
 };
 
 
-// $(document).ready(function(){
-//     $('.sidenav').sidenav();
-// });
-
 document.addEventListener('DOMContentLoaded', function () {
     var elem = document.querySelector('.sidenav');
     var instance = M.Sidenav.init(elem, {

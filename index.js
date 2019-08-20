@@ -2,15 +2,17 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const csurf = require('csurf');
+const flash = require('connect-flash');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path');
 const mongoose = require('mongoose');
 
-// const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 
-const mongoURI = 'mongodb://localhost/e-courses';
+// const mongoURI = 'mongodb://localhost/e-courses';
+
+const keys = require('./keys');
 
 
 // Require routes
@@ -25,7 +27,7 @@ const app = express();
 
 
 const store = new MongoDBStore({
-    uri: mongoURI,
+    uri: keys.MONGO_URI,
     collection: 'sessions'
 });
 
@@ -35,13 +37,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 
 app.use(session({
-    secret: 'secret',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store
 }));
 
 app.use(csurf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
 
@@ -58,20 +61,6 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 
-// app.use(async (req, res, next) => {
-//
-//     try {
-//         const user = await User.findById('5d56789bbbc6ea67bc2634f9');
-//         req.user = user;
-//         next();
-//     } catch (e) {
-//         console.log(e);
-//     }
-//
-//
-// });
-
-
 // Use Routes
 app.use('/', home);
 app.use('/courses', courses);
@@ -84,18 +73,7 @@ const PORT = process.env.PORT || 5000;
 
 async function start() {
     try {
-        await mongoose.connect(mongoURI, {useNewUrlParser: true, useFindAndModify: false});
-
-        // const candidate = await User.findOne();
-        //
-        // if (!candidate) {
-        //     const user = new User({
-        //         email: 'remi9988@mail.ru',
-        //         name: 'Roman',
-        //         cart: {items: []}
-        //     });
-        //     await user.save();
-        // }
+        await mongoose.connect(keys.MONGO_URI, {useNewUrlParser: true, useFindAndModify: false});
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);

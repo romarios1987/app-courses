@@ -6,8 +6,15 @@
                 <li class="tab col s6"><a href="#register">Registration</a></li>
             </ul>
         </div>
+
+
         <div id="login" class="col s12">
             <h3 class="center">Enter in app</h3>
+            {{#if loginError}}
+                <p class="alert-error">
+                   {{loginError}}
+                </p>
+            {{/if}}
             <form action="/auth/login" method="POST">
                 <div class="input-field">
                     <input id="email" name="email" type="email" class="validate" required>
@@ -23,8 +30,16 @@
                 <button class="btn btn-primary" type="submit">Login</button>
             </form>
         </div>
+
+
+
         <div id="register" class="col s12">
             <h3 class="center">Register in app</h3>
+            {{#if registerError}}
+                <p class="alert-error">
+                    {{registerError}}
+                </p>
+            {{/if}}
             <form action="/auth/register" method="POST">
                 <div class="input-field">
                     <input id="register_email" name="email" type="email" class="validate" required>
