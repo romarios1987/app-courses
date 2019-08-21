@@ -19,11 +19,15 @@
                     </div>
                     <div class="card-action actions">
 
+
+
                         <div class="wrap-actions-link">
                             <a href="/courses/{{id}}">Open course</a>
 
                             {{#if @root.isAuth}}
-                                <a href="/courses/{{id}}/edit?allow=true">Edit course</a>
+                                {{#if_equals userId._id @root.userId}}
+                                    <a href="/courses/{{id}}/edit?allow=true">Edit course</a>
+                                {{/if_equals}}
                             {{/if}}
                         </div>
                         {{#if  @root.isAuth}}

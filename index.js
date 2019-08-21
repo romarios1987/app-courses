@@ -51,7 +51,8 @@ app.use(userMiddleware);
 
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    extname: 'hbs'
+    extname: 'hbs',
+    helpers: require('./utils/hbs-helpers'),
 });
 
 // register Handlebars

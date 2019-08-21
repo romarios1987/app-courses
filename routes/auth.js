@@ -82,7 +82,7 @@ router.post('/register', async (req, res) => {
                 email, name, password: hashPassword, cart: {items: []}
             });
             await user.save();
-            res.redirect('/auth/login#register');
+            res.redirect('/auth/login#login');
             await transporter.sendMail(regEmail(email));
         }
 
