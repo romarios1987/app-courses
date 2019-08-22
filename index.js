@@ -11,6 +11,8 @@ const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 const errorHandler = require('./middleware/error');
 
+const fileMiddleware = require('./middleware/file');
+
 // const mongoURI = 'mongodb://localhost/e-courses';
 
 const keys = require('./keys');
@@ -22,6 +24,7 @@ const courses = require('./routes/courses');
 const cartRoutes = require('./routes/cart');
 const orders = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 
 const app = express();
@@ -34,6 +37,7 @@ const store = new MongoDBStore({
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.urlencoded({extended: true}));
 
@@ -44,11 +48,13 @@ app.use(session({
     store: store
 }));
 
+
+app.use(fileMiddleware.single('avatar'));
+
 app.use(csurf());
 app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
-
 
 
 const hbs = exphbs.create({
@@ -70,6 +76,7 @@ app.use('/courses', courses);
 app.use('/cart', cartRoutes);
 app.use('/orders', orders);
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.use(errorHandler);
 

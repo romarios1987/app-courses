@@ -45,3 +45,7 @@
     background: rgba(255, 0, 0, .3);
     color: #000;
 }
+.wrap-avatar{
+    display: flex;
+    justify-content: center;
+}
