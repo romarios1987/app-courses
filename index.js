@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const errorHandler = require('./middleware/error');
 
 // const mongoURI = 'mongodb://localhost/e-courses';
 
@@ -49,6 +50,7 @@ app.use(varMiddleware);
 app.use(userMiddleware);
 
 
+
 const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
@@ -68,6 +70,8 @@ app.use('/courses', courses);
 app.use('/cart', cartRoutes);
 app.use('/orders', orders);
 app.use('/auth', authRoutes);
+
+app.use(errorHandler);
 
 
 const PORT = process.env.PORT || 5000;

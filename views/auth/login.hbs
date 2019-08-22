@@ -12,10 +12,10 @@
             <h3 class="center">Enter in app</h3>
             {{#if loginError}}
                 <p class="alert-error">
-                   {{loginError}}
+                    {{loginError}}
                 </p>
             {{/if}}
-            <form action="/auth/login" method="POST">
+            <form action="/auth/login" method="POST" novalidate>
                 <div class="input-field">
                     <input id="email" name="email" type="email" class="validate" required>
                     <label for="email">Email</label>
@@ -33,7 +33,6 @@
         </div>
 
 
-
         <div id="register" class="col s12">
             <h3 class="center">Register in app</h3>
             {{#if registerError}}
@@ -41,7 +40,7 @@
                     {{registerError}}
                 </p>
             {{/if}}
-            <form action="/auth/register" method="POST">
+            <form action="/auth/register" method="POST" novalidate>
                 <div class="input-field">
                     <input id="register_email" name="email" type="email" class="validate" required>
                     <label for="register_email">Email</label>
